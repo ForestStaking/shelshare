@@ -40,6 +40,64 @@ export default function HomePage() {
         <LandingCTA />
       </div>
 
+      {/* Built With logos — mirrors ShelKit front page exactly */}
+      <div className="border-t border-[#1a1a1a]">
+        <div className="mx-auto max-w-[1100px] px-8 py-[48px] text-center">
+          <p className="text-txt-muted text-[14px] font-semibold mb-8 opacity-70">
+            Built With
+          </p>
+          <div className="flex justify-center items-start gap-16 flex-wrap">
+            {/* Shelby */}
+            <div className="flex flex-col items-center gap-[10px]">
+              <div className="h-[55px] flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/shelby-logo.svg"
+                  alt="Shelby"
+                  style={{ height: 44, objectFit: 'contain', filter: 'brightness(2)' }}
+                />
+              </div>
+              <span className="text-[11px] font-normal text-txt-muted opacity-70">
+                Decentralised Hot Storage
+              </span>
+            </div>
+
+            {/* Aptos */}
+            <div className="flex flex-col items-center gap-[10px]">
+              <div className="h-[55px] flex items-center justify-center">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/aptos-logo.png"
+                  alt="Aptos"
+                  style={{ height: 44, objectFit: 'contain', filter: 'invert(1) brightness(1.5)' }}
+                />
+              </div>
+              <span className="text-[11px] font-normal text-txt-muted opacity-70">
+                Layer 1 Blockchain
+              </span>
+            </div>
+
+            {/* Forest */}
+            <div className="flex flex-col items-center gap-[10px]">
+              <div className="h-[55px] flex items-center justify-center gap-[3px]">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/forest-icon.png"
+                  alt="Forest"
+                  style={{ height: 44, objectFit: 'contain' }}
+                />
+                <span className="text-[3rem] font-bold text-white leading-none">
+                  Forest
+                </span>
+              </div>
+              <span className="text-[11px] font-normal text-txt-muted opacity-70">
+                Infrastructure
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* How it works */}
       <div className="relative border-t border-[#1a1a1a]">
         <div className="mx-auto max-w-[1100px] px-8 py-[80px]">
