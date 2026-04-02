@@ -17,13 +17,7 @@ export default function HomePage() {
       />
 
       {/* Hero */}
-      <div className="relative mx-auto max-w-[860px] px-8 pt-[120px] pb-[100px] text-center">
-        <div className="inline-block mb-7">
-          <span className="bg-shl-card border border-[#1a1a1a] text-txt-muted text-[12px] font-semibold uppercase tracking-[0.5px] px-[14px] py-[6px] rounded-full">
-            Shelby Protocol Testnet
-          </span>
-        </div>
-
+      <div className="relative mx-auto max-w-[860px] px-8 pt-[80px] pb-[60px] text-center">
         <h1 className="text-[60px] font-extrabold text-txt-primary tracking-[-2px] leading-[1.05] mb-6">
           Store it. Share it.
           <br />
@@ -42,7 +36,7 @@ export default function HomePage() {
 
       {/* Built With logos — mirrors ShelKit front page exactly */}
       <div className="border-t border-[#1a1a1a]">
-        <div className="mx-auto max-w-[1100px] px-8 py-[48px] text-center">
+        <div className="mx-auto max-w-[1100px] px-8 py-[36px] text-center">
           <p className="text-txt-muted text-[14px] font-semibold mb-8 opacity-70">
             Built With
           </p>
