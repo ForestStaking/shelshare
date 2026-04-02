@@ -80,7 +80,7 @@ class ShelbyAdapter implements StorageAdapter {
 
     this.client = new ShelbyNodeClient({
       network,
-      apiKey: process.env.SHELBY_API_KEY,
+      apiKey: process.env.SHELBY_API_KEY?.trim(),
     });
 
     if (!process.env.SHELBY_ACCOUNT_PRIVATE_KEY) {
@@ -91,7 +91,7 @@ class ShelbyAdapter implements StorageAdapter {
 
     this.account = new Ed25519Account({
       privateKey: new Ed25519PrivateKey(
-        process.env.SHELBY_ACCOUNT_PRIVATE_KEY
+        process.env.SHELBY_ACCOUNT_PRIVATE_KEY?.trim()
       ),
     });
 
