@@ -7,7 +7,7 @@
  */
 
 import { useState, useCallback, useRef } from 'react';
-import { formatBytes } from '@/lib/utils';
+import { formatBytes, copyToClipboard } from '@/lib/utils';
 import { usePetra } from '@/lib/petra';
 
 interface UploadResult {
@@ -94,9 +94,9 @@ export default function UploadZone() {
     [handleUpload]
   );
 
-  const copyToClipboard = async () => {
+  const handleCopy = async () => {
     if (!result) return;
-    await navigator.clipboard.writeText(result.shareUrl);
+    await copyToClipboard(result.shareUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -135,7 +135,7 @@ export default function UploadZone() {
               </p>
             </div>
             <button
-              onClick={copyToClipboard}
+              onClick={handleCopy}
               className="bg-shelgreen text-[#050505] font-semibold text-[13px] px-4 py-[10px] rounded-[6px] hover:bg-shelgreen-dark transition-all duration-150 whitespace-nowrap"
             >
               {copied ? 'Copied' : 'Copy'}

@@ -5,6 +5,27 @@
 import { nanoid } from 'nanoid';
 
 /**
+ * Copy text to clipboard.
+ * Uses navigator.clipboard when available (HTTPS), falls back to
+ * execCommand for HTTP contexts (e.g. during DNS/SSL provisioning).
+ */
+export async function copyToClipboard(text: string): Promise<void> {
+  if (navigator.clipboard && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+  // Fallback for non-secure contexts
+  const el = document.createElement('textarea');
+  el.value = text;
+  el.style.position = 'fixed';
+  el.style.opacity = '0';
+  document.body.appendChild(el);
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+}
+
+/**
  * Generate a unique short ID for shareable file links.
  * Uses nanoid with 10 characters — URL-safe, collision-resistant.
  */

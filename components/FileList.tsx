@@ -6,7 +6,7 @@
  */
 
 import { useState } from 'react';
-import { formatBytes, buildShareUrl } from '@/lib/utils';
+import { formatBytes, buildShareUrl, copyToClipboard } from '@/lib/utils';
 
 interface FileRecord {
   id: string;
@@ -30,7 +30,7 @@ export default function FileList({ files, onDelete }: FileListProps) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const copyLink = async (shortId: string) => {
-    await navigator.clipboard.writeText(buildShareUrl(shortId));
+    await copyToClipboard(buildShareUrl(shortId));
     setCopiedId(shortId);
     setTimeout(() => setCopiedId(null), 2000);
   };
