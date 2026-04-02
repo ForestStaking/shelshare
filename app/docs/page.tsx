@@ -132,7 +132,7 @@ export default function DocsPage() {
         <h1 className="text-txt-primary font-semibold text-[34px] mt-2 mb-3">ShelShare Docs</h1>
         <p className="text-txt-muted text-[16px] max-w-[600px] leading-relaxed">
           Everything you need to know about ShelShare — decentralised file sharing built on
-          Shelby Protocol, Aptos, and Forest Infra nodes.
+          Shelby Protocol and Aptos.
         </p>
       </div>
 
@@ -427,7 +427,7 @@ export default function DocsPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
               {[
-                { name: 'Shelby Protocol', color: 'border-shelgreen/30 bg-shelgreen/5', badge: 'text-shelgreen', desc: 'Stores actual file bytes. Files are content-addressed and replicated across Forest Infra nodes. ShelShare uploads via the Shelby SDK and downloads via the same adapter.' },
+                { name: 'Shelby Protocol', color: 'border-shelgreen/30 bg-shelgreen/5', badge: 'text-shelgreen', desc: 'Stores actual file bytes. Files are content-addressed and stored on Shelby Protocol\'s network. ShelShare uploads via the Shelby SDK and downloads via the same adapter.' },
                 { name: 'Supabase (Postgres)', color: 'border-blue-500/30 bg-blue-500/5', badge: 'text-blue-400', desc: 'Stores metadata only: short_id → shelbyAddress mapping, passwords (bcrypt), expiry, download counts, sealed file condition parameters, reports, and blocklist.' },
                 { name: 'Move Contract', color: 'border-amber-500/30 bg-amber-500/5', badge: 'text-amber-400', desc: 'Deployed on Shelby Protocol (Aptos-compatible). Holds AES keys for sealed files behind verifiable on-chain conditions. Key is released atomically with condition satisfaction.' },
                 { name: 'Client (Browser)', color: 'border-purple-500/30 bg-purple-500/5', badge: 'text-purple-400', desc: 'All encryption and decryption happens here using the Web Crypto API (AES-256-GCM). Wallet signing (Petra) happens here. The server never sees plaintext sealed-file content.' },
