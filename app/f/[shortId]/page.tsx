@@ -97,7 +97,7 @@ export default async function SharePage({ params }: SharePageProps) {
                 Shelby Address
               </p>
               <p className="text-txt-dim font-mono text-[12px] break-all">
-                {file.shelby_address}
+                {file.shelby_address.replace(/ /g, '_')}
               </p>
             </div>
           </>

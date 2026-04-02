@@ -101,16 +101,18 @@ class ShelbyAdapter implements StorageAdapter {
   async upload(buffer: Buffer, filename: string): Promise<UploadResult> {
     await this.init();
 
+    // Sanitise filename for use as Shelby blobName — no spaces or special chars
+    const blobName = filename.replace(/[^a-zA-Z0-9._-]/g, '_');
+
     await this.client.upload({
       signer: this.account,
       blobData: new Uint8Array(buffer),
-      blobName: filename,
+      blobName,
       expirationMicros: (Date.now() + THIRTY_DAYS_MS) * 1000,
     });
 
-    // Upload returns void — success means stored.
-    // shelbyAddress is constructed from account address + filename.
-    const shelbyAddress = `shelby://${this.account.accountAddress.toString()}/${filename}`;
+    // shelbyAddress is constructed from account address + sanitised blobName.
+    const shelbyAddress = `shelby://${this.account.accountAddress.toString()}/${blobName}`;
 
     // On testnet, the address itself is the on-chain proof
     const shelbyProof = shelbyAddress;
