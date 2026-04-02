@@ -1,7 +1,7 @@
 import LandingCTA from '@/components/LandingCTA';
 
 /**
- * Landing page — marketing/hero. No upload zone.
+ * Landing page — marketing/hero.
  * Upload lives at /upload (requires wallet connection).
  */
 export default function HomePage() {
@@ -19,22 +19,23 @@ export default function HomePage() {
       {/* Hero */}
       <div className="relative mx-auto max-w-[860px] px-8 pt-[80px] pb-[60px] text-center">
         <h1 className="text-[60px] font-extrabold text-txt-primary tracking-[-2px] leading-[1.05] mb-6">
-          Store it. Share it.
+          Share files with
           <br />
           <span className="font-serif italic font-normal text-shelgreen">
-            No one can take it down.
+            on-chain access control.
           </span>
         </h1>
 
-        <p className="text-txt-muted text-[17px] max-w-[520px] mx-auto leading-relaxed mb-10">
-          Decentralised file sharing built on Shelby Protocol. Upload once,
-          share forever. No servers, no takedowns, no middlemen.
+        <p className="text-txt-muted text-[17px] max-w-[540px] mx-auto leading-relaxed mb-10">
+          Upload to Shelby Protocol. Encrypt with AES-256. Lock the key behind
+          a Move smart contract — pay to unlock, time-released, or one-time burn.
+          Your files, your rules.
         </p>
 
         <LandingCTA />
       </div>
 
-      {/* Built With logos — mirrors ShelKit front page exactly */}
+      {/* Built With logos */}
       <div className="border-t border-[#1a1a1a]">
         <div className="mx-auto max-w-[1100px] px-8 py-[36px] text-center">
           <p className="text-txt-muted text-[14px] font-semibold mb-8 opacity-70">
@@ -92,6 +93,70 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Sealed Files feature spotlight */}
+      <div className="relative border-t border-[#1a1a1a] bg-[#070707]">
+        <div className="mx-auto max-w-[1100px] px-8 py-[80px]">
+          <div className="flex flex-col md:flex-row gap-12 items-center">
+
+            {/* Left — copy */}
+            <div className="flex-1">
+              <span className="inline-block text-shelgreen text-[11px] font-semibold font-mono uppercase tracking-[0.6px] mb-4">
+                Sealed Files
+              </span>
+              <h2 className="text-txt-primary font-bold text-[30px] tracking-[-0.8px] leading-[1.2] mb-5">
+                Encrypt once.<br />Unlock on your terms.
+              </h2>
+              <p className="text-txt-muted text-[15px] leading-relaxed mb-6">
+                Files are encrypted with AES-256-GCM in the browser before they
+                ever leave your machine. The decryption key is stored inside a Move
+                smart contract on Shelby Protocol — released only when your chosen
+                condition is satisfied on-chain.
+              </p>
+              <p className="text-txt-dim text-[14px] leading-relaxed">
+                ShelShare's servers never see plaintext content. Even with full
+                database access, encrypted files cannot be read without the
+                on-chain key.
+              </p>
+            </div>
+
+            {/* Right — condition cards */}
+            <div className="flex-1 grid grid-cols-1 gap-3 w-full max-w-[380px]">
+              {[
+                {
+                  icon: '💸',
+                  label: 'Pay to Unlock',
+                  color: 'border-amber-500/20 bg-amber-500/5',
+                  badge: 'text-amber-400',
+                  desc: 'Set an APT price. The smart contract transfers payment to you atomically with the key release — no trust required.',
+                },
+                {
+                  icon: '⏱',
+                  label: 'Time Lock',
+                  color: 'border-blue-500/20 bg-blue-500/5',
+                  badge: 'text-blue-400',
+                  desc: 'Schedule a future date. The file is unreadable until the block timestamp passes — enforced on-chain, not by ShelShare.',
+                },
+                {
+                  icon: '🔥',
+                  label: 'Burn — One-Time',
+                  color: 'border-orange-500/20 bg-orange-500/5',
+                  badge: 'text-orange-400',
+                  desc: 'First person to claim gets the key. After that it\'s gone forever. Perfect for exclusive drops and one-time secrets.',
+                },
+              ].map(({ icon, label, color, badge, desc }) => (
+                <div key={label} className={`border rounded-[10px] p-4 ${color}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[16px]">{icon}</span>
+                    <span className={`font-semibold text-[14px] ${badge}`}>{label}</span>
+                  </div>
+                  <p className="text-txt-dim text-[13px] leading-relaxed">{desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* How it works */}
       <div className="relative border-t border-[#1a1a1a]">
         <div className="mx-auto max-w-[1100px] px-8 py-[80px]">
@@ -99,7 +164,7 @@ export default function HomePage() {
             How it works
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
             {[
               {
                 step: '01',
@@ -109,12 +174,17 @@ export default function HomePage() {
               {
                 step: '02',
                 title: 'Upload',
-                desc: 'Drop your file. Bytes go straight to Shelby Protocol\'s hot storage layer — no central server ever touches them.',
+                desc: 'Drop your file. Bytes go to Shelby Protocol — no central server touches them. Up to 500 MB.',
               },
               {
                 step: '03',
+                title: 'Seal (optional)',
+                desc: 'Encrypt the file client-side and choose an unlock condition — pay, time-lock, or one-time burn.',
+              },
+              {
+                step: '04',
                 title: 'Share',
-                desc: 'Get a short link instantly. Optionally add a password or expiry. Share with anyone, anywhere.',
+                desc: 'Send the link. Recipients connect Petra, satisfy the condition on-chain, and decrypt locally.',
               },
             ].map((item) => (
               <div
@@ -136,6 +206,58 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* Feature grid */}
+      <div className="border-t border-[#1a1a1a] bg-[#070707]">
+        <div className="mx-auto max-w-[1100px] px-8 py-[80px]">
+          <p className="text-txt-dim text-[12px] font-semibold uppercase tracking-[0.8px] mb-10 text-center">
+            Everything included
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
+            {[
+              {
+                icon: '⛓',
+                title: 'Decentralised Storage',
+                desc: 'Files live on Shelby Protocol nodes — no AWS, no GCP, no single point of failure or takedown.',
+              },
+              {
+                icon: '🔒',
+                title: 'Client-Side Encryption',
+                desc: 'AES-256-GCM in the browser. Plaintext never leaves your device. Sealed files are unreadable server-side.',
+              },
+              {
+                icon: '🧾',
+                title: 'On-Chain Access Control',
+                desc: 'Move smart contract on Shelby Protocol manages keys. Conditions are verifiable and tamper-proof.',
+              },
+              {
+                icon: '🔑',
+                title: 'Password Protection',
+                desc: 'Protect any link with a password. Stored as a bcrypt hash — ShelShare never sees the plaintext.',
+              },
+              {
+                icon: '⏳',
+                title: 'Link Expiry',
+                desc: 'Set links to expire after 1, 7, 30, or 90 days. Expired links return 410 Gone automatically.',
+              },
+              {
+                icon: '🛡',
+                title: 'Built-in Safety',
+                desc: 'Extension blocklist, magic-bytes detection, SHA-256 hash blocklist, and per-wallet rate limiting on every upload.',
+              },
+            ].map(({ icon, title, desc }) => (
+              <div
+                key={title}
+                className="bg-shl-card border border-[#1a1a1a] rounded-[12px] p-6 hover:border-[#2a2a2a] transition-all duration-150"
+              >
+                <div className="text-[26px] mb-3">{icon}</div>
+                <h3 className="text-txt-primary font-semibold text-[15px] mb-2">{title}</h3>
+                <p className="text-txt-dim text-[13px] leading-relaxed">{desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
       {/* Trust signals */}
       <div className="border-t border-[#1a1a1a]">
         <div className="mx-auto max-w-[1100px] px-8 py-[80px]">
@@ -143,29 +265,29 @@ export default function HomePage() {
 
             <div className="bg-shl-card border border-[#1a1a1a] rounded-[12px] p-8">
               <p className="text-txt-dim text-[11px] font-semibold uppercase tracking-[0.6px] mb-4">
-                Powered by
+                Storage Layer
               </p>
               <h3 className="text-txt-primary font-bold text-[20px] mb-2 tracking-[-0.4px]">
                 Shelby Protocol
               </h3>
               <p className="text-txt-muted text-[14px] leading-relaxed">
-                Decentralised hot storage built on Aptos. Files are stored across
-                Cavalier nodes — no single point of failure, no entity that can
-                take content down.
+                Decentralised hot storage built on Aptos. Files are replicated across
+                Forest Infra Cavalier nodes — no central authority, no entity that can
+                unilaterally remove content.
               </p>
             </div>
 
             <div className="bg-shl-card border border-[#1a1a1a] rounded-[12px] p-8">
               <p className="text-txt-dim text-[11px] font-semibold uppercase tracking-[0.6px] mb-4">
-                Built by
+                Access Control Layer
               </p>
               <h3 className="text-txt-primary font-bold text-[20px] mb-2 tracking-[-0.4px]">
-                Forest
+                Move Smart Contract
               </h3>
               <p className="text-txt-muted text-[14px] leading-relaxed">
-                Infrastructure tooling for the Aptos and Shelby ecosystems.
-                ShelShare is a reference implementation demonstrating what you
-                can build on Shelby Protocol today.
+                The <code className="text-shelgreen font-mono text-[13px]">sealed_files</code> contract
+                is deployed on Shelby Protocol testnet. It stores AES keys, verifies conditions,
+                and emits unlock events — all atomically and on-chain.
               </p>
             </div>
 
@@ -177,10 +299,11 @@ export default function HomePage() {
       <div className="border-t border-[#1a1a1a]">
         <div className="mx-auto max-w-[860px] px-8 py-[100px] text-center">
           <h2 className="text-[36px] font-bold text-txt-primary tracking-[-1px] mb-4">
-            Ready to share?
+            Ready to seal your first file?
           </h2>
-          <p className="text-txt-muted text-[15px] mb-8">
-            Connect your Petra wallet and upload your first file in under 30 seconds.
+          <p className="text-txt-muted text-[15px] mb-8 max-w-[460px] mx-auto leading-relaxed">
+            Connect Petra, upload a file, and choose an unlock condition.
+            The whole flow takes under a minute.
           </p>
           <LandingCTA />
         </div>
