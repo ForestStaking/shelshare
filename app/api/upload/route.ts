@@ -16,6 +16,7 @@ import { getStorageAdapter } from '@/lib/storage';
 import { createServerClient } from '@/lib/supabase';
 import { verifyWalletAddress, ensureUser } from '@/lib/auth';
 import { generateShortId, buildShareUrl, getMimeType } from '@/lib/utils';
+import { inspectFile, checkRateLimit } from '@/lib/safety';
 import bcrypt from 'bcryptjs';
 
 export async function POST(request: NextRequest) {
@@ -54,6 +55,34 @@ export async function POST(request: NextRequest) {
     const sizeBytes = buffer.length;
     const mimeType = file.type || getMimeType(filename);
 
+    // -----------------------------------------------------------------------
+    // Safety checks — run before anything touches Shelby
+    // Sealed files are inspected as-is (extension + size); their plaintext
+    // was validated client-side before encryption.
+    // -----------------------------------------------------------------------
+    const safetyResult = inspectFile(buffer, filename);
+    if (!safetyResult.safe) {
+      console.warn(`[upload] Safety block for ${auth.walletAddress}: ${safetyResult.reason}`);
+      return NextResponse.json({ error: safetyResult.reason }, { status: 422 });
+    }
+
+    // Rate limiting — check recent upload count & bytes for this wallet
+    const supabase = createServerClient();
+    const windowStart = new Date(Date.now() - 60 * 60 * 1000).toISOString();
+    const { data: recentUploads } = await supabase
+      .from('files')
+      .select('size_bytes')
+      .eq('owner_user_id', user.id)
+      .gte('created_at', windowStart)
+      .is('deleted_at', null);
+
+    const uploadCount = recentUploads?.length ?? 0;
+    const totalBytes  = recentUploads?.reduce((s, f) => s + (f.size_bytes || 0), 0) ?? 0;
+    const rateCheck   = checkRateLimit(uploadCount, totalBytes, sizeBytes);
+    if (!rateCheck.ok) {
+      return NextResponse.json({ error: rateCheck.reason }, { status: 429 });
+    }
+
     // Upload to Shelby Protocol via storage adapter
     const adapter = getStorageAdapter();
     const { shelbyAddress, shelbyProof } = await adapter.upload(buffer, filename);
@@ -80,22 +109,22 @@ export async function POST(request: NextRequest) {
 
     // Write metadata to Supabase
     // NOTE: File bytes are on Shelby. This record is the metadata index only.
-    const supabase = createServerClient();
     const { error: insertError } = await supabase.from('files').insert({
-      short_id:         shortId,
-      owner_user_id:    user.id,
+      short_id:          shortId,
+      owner_user_id:     user.id,
       original_filename: filename,
-      size_bytes:       sizeBytes,
-      mime_type:        mimeType,
-      shelby_address:   shelbyAddress,
-      shelby_proof:     shelbyProof,
-      password_hash:    passwordHash,
-      expires_at:       expiresAt,
+      size_bytes:        sizeBytes,
+      mime_type:         mimeType,
+      shelby_address:    shelbyAddress,
+      shelby_proof:      shelbyProof,
+      password_hash:     passwordHash,
+      expires_at:        expiresAt,
+      file_sha256:       safetyResult.sha256,
       // Sealed fields (null for normal uploads)
-      is_sealed:        isSealed,
-      condition_type:   isSealed ? conditionType   : null,
-      price_octas:      isSealed ? priceOctas?.toString()    : null,
-      unlock_timestamp: isSealed ? unlockTimestamp?.toString() : null,
+      is_sealed:         isSealed,
+      condition_type:    isSealed ? conditionType            : null,
+      price_octas:       isSealed ? priceOctas?.toString()   : null,
+      unlock_timestamp:  isSealed ? unlockTimestamp?.toString() : null,
     });
 
     if (insertError) {
