@@ -7,7 +7,11 @@
 import { createServerClient } from '@/lib/supabase';
 import { formatBytes } from '@/lib/utils';
 import PasswordGate from '@/components/PasswordGate';
+import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
+
+// SealedUnlock uses wallet adapter hooks — must be client-side only
+const SealedUnlock = dynamic(() => import('@/components/SealedUnlock'), { ssr: false });
 
 interface SharePageProps {
   params: { shortId: string };
@@ -26,8 +30,9 @@ export default async function SharePage({ params }: SharePageProps) {
 
   if (!file) notFound();
 
-  const isExpired = file.expires_at && new Date(file.expires_at) < new Date();
+  const isExpired   = file.expires_at && new Date(file.expires_at) < new Date();
   const isProtected = !!file.password_hash;
+  const isSealed    = !!file.is_sealed;
   const sizeFormatted = formatBytes(file.size_bytes);
 
   return (
@@ -60,7 +65,7 @@ export default async function SharePage({ params }: SharePageProps) {
             {/* File Info */}
             <div className="mb-8 text-center">
               <span className="inline-block bg-shl-surface border border-[#1a1a1a] text-txt-dim text-[11px] font-semibold uppercase tracking-[0.5px] px-3 py-[4px] rounded-full mb-4">
-                Shared via ShelShare
+                {isSealed ? '🔒 Sealed via ShelShare' : 'Shared via ShelShare'}
               </span>
               <h1 className="text-txt-primary font-semibold text-[18px] mb-1 break-all">
                 {file.original_filename}
@@ -73,8 +78,18 @@ export default async function SharePage({ params }: SharePageProps) {
               )}
             </div>
 
-            {/* Password Gate or Direct Download */}
-            {isProtected ? (
+            {/* Sealed / Password / Direct download */}
+            {isSealed ? (
+              <SealedUnlock
+                shortId={shortId}
+                filename={file.original_filename}
+                mimeType={file.mime_type}
+                sizeFormatted={sizeFormatted}
+                conditionType={file.condition_type ?? 1}
+                priceOctas={String(file.price_octas ?? '0')}
+                unlockTimestamp={String(file.unlock_timestamp ?? '0')}
+              />
+            ) : isProtected ? (
               <PasswordGate
                 shortId={shortId}
                 filename={file.original_filename}

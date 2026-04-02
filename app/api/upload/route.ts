@@ -31,9 +31,18 @@ export async function POST(request: NextRequest) {
 
     // Parse multipart form data
     const formData = await request.formData();
-    const file = formData.get('file') as File | null;
-    const passwordRaw = formData.get('password') as string | null;
-    const expiryDaysRaw = formData.get('expiryDays') as string | null;
+    const file           = formData.get('file')           as File   | null;
+    const passwordRaw    = formData.get('password')       as string | null;
+    const expiryDaysRaw  = formData.get('expiryDays')     as string | null;
+    const isSealedRaw    = formData.get('isSealed')       as string | null;
+    const condTypeRaw    = formData.get('conditionType')  as string | null;
+    const priceOctasRaw  = formData.get('priceOctas')     as string | null;
+    const unlockTsRaw    = formData.get('unlockTimestamp') as string | null;
+
+    const isSealed       = isSealedRaw === 'true';
+    const conditionType  = condTypeRaw  ? parseInt(condTypeRaw,  10) : null;
+    const priceOctas     = priceOctasRaw  ? BigInt(priceOctasRaw)  : null;
+    const unlockTimestamp = unlockTsRaw ? BigInt(unlockTsRaw)   : null;
 
     if (!file) {
       return NextResponse.json({ error: 'No file provided' }, { status: 400 });
@@ -73,15 +82,20 @@ export async function POST(request: NextRequest) {
     // NOTE: File bytes are on Shelby. This record is the metadata index only.
     const supabase = createServerClient();
     const { error: insertError } = await supabase.from('files').insert({
-      short_id: shortId,
-      owner_user_id: user.id,
+      short_id:         shortId,
+      owner_user_id:    user.id,
       original_filename: filename,
-      size_bytes: sizeBytes,
-      mime_type: mimeType,
-      shelby_address: shelbyAddress,
-      shelby_proof: shelbyProof,
-      password_hash: passwordHash,
-      expires_at: expiresAt,
+      size_bytes:       sizeBytes,
+      mime_type:        mimeType,
+      shelby_address:   shelbyAddress,
+      shelby_proof:     shelbyProof,
+      password_hash:    passwordHash,
+      expires_at:       expiresAt,
+      // Sealed fields (null for normal uploads)
+      is_sealed:        isSealed,
+      condition_type:   isSealed ? conditionType   : null,
+      price_octas:      isSealed ? priceOctas?.toString()    : null,
+      unlock_timestamp: isSealed ? unlockTimestamp?.toString() : null,
     });
 
     if (insertError) {
@@ -103,7 +117,8 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       shortId,
-      shareUrl: buildShareUrl(shortId),
+      shareUrl:      buildShareUrl(shortId),
+      shelbyAddress, // needed by client to call create_seal
       filename,
       size: sizeBytes,
     });

@@ -1,0 +1,12 @@
+[package]
+name = "sealed"
+version = "1.0.0"
+authors = ["Forest Infra"]
+
+[addresses]
+sealed = "0xad132d7bd18c6370f756e0edc3408696f007fe43b987f027e6f9bc866ab3a283"
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-core.git"
+rev = "mainnet"
+subdir = "aptos-move/framework/aptos-framework"
