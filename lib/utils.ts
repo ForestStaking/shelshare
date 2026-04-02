@@ -51,7 +51,7 @@ export function formatBytes(bytes: number, decimals = 1): string {
  * Get the base URL for generating share links.
  */
 export function getBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+  return (process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000').trim();
 }
 
 /**
