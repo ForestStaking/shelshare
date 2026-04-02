@@ -58,7 +58,7 @@ export default function UploadZone() {
         const aesKey     = await generateAESKey();
         aesKeyBytes      = await exportKeyBytes(aesKey);
         const encrypted  = await encryptFile(await file.arrayBuffer(), aesKey);
-        uploadFile       = new File([encrypted], file.name, { type: 'application/octet-stream' });
+        uploadFile       = new File([encrypted.buffer as ArrayBuffer], file.name, { type: 'application/octet-stream' });
         setProgressLabel('Uploading to Shelby…');
       }
 

@@ -27,7 +27,7 @@ export async function exportKeyBytes(key: CryptoKey): Promise<Uint8Array> {
 
 /** Import 32 raw bytes back into a CryptoKey for decryption. */
 export async function importKeyBytes(bytes: Uint8Array): Promise<CryptoKey> {
-  return crypto.subtle.importKey('raw', bytes, { name: 'AES-GCM', length: 256 }, false, [
+  return crypto.subtle.importKey('raw', bytes.buffer as ArrayBuffer, { name: 'AES-GCM', length: 256 }, false, [
     'decrypt',
   ]);
 }
@@ -45,7 +45,7 @@ export async function encryptFile(
   key: CryptoKey
 ): Promise<Uint8Array> {
   const iv = crypto.getRandomValues(new Uint8Array(12));
-  const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, data);
+  const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv as BufferSource }, key, data);
   const result = new Uint8Array(12 + ciphertext.byteLength);
   result.set(iv, 0);
   result.set(new Uint8Array(ciphertext), 12);
@@ -67,7 +67,7 @@ export async function decryptFile(
   const bytes = new Uint8Array(encrypted);
   const iv = bytes.slice(0, 12);
   const ciphertext = bytes.slice(12);
-  return crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext);
+  return crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv as BufferSource }, key, ciphertext.buffer as ArrayBuffer);
 }
 
 // ---------------------------------------------------------------------------
