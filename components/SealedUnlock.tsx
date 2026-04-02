@@ -185,24 +185,38 @@ export default function SealedUnlock({
         </div>
       )}
 
-      {/* Unlock button */}
-      {!isLocked && status !== 'done' && (
+      {/* Step 1 — Connect wallet (shown when not connected and file needs wallet) */}
+      {!isLocked && status !== 'done' && !connected && (
+        <div className="text-center">
+          <button
+            onClick={() => { setStatus('waiting_wallet'); connect('Petra').finally(() => setStatus('idle')); }}
+            disabled={status === 'waiting_wallet'}
+            className="w-full bg-shelgreen text-[#050505] font-semibold text-[15px] px-8 py-[14px] rounded-[8px] hover:bg-shelgreen-dark active:scale-[0.97] transition-all duration-150 disabled:opacity-60"
+          >
+            {status === 'waiting_wallet' ? 'Connecting…' : 'Connect Petra to unlock'}
+          </button>
+          <p className="text-txt-dim text-[12px] mt-2">
+            You need a Petra wallet to{conditionType === CONDITION_PAY ? ' pay and' : ''} decrypt this file
+          </p>
+        </div>
+      )}
+
+      {/* Step 2 — Unlock action (shown once wallet is connected) */}
+      {!isLocked && status !== 'done' && connected && (
         <div className="text-center">
           <button
             onClick={unlock}
             disabled={buttonDisabled}
-            className="bg-shelgreen text-[#050505] font-semibold text-[15px] px-8 py-[14px] rounded-[8px] hover:bg-shelgreen-dark active:scale-[0.97] transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-shelgreen text-[#050505] font-semibold text-[15px] px-8 py-[14px] rounded-[8px] hover:bg-shelgreen-dark active:scale-[0.97] transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {status === 'waiting_wallet' && 'Connecting wallet…'}
-            {status === 'unlocking'      && 'Waiting for signature…'}
-            {status === 'decrypting'     && 'Decrypting…'}
-            {status === 'idle' && (connected
-              ? conditionLabel()
-              : 'Connect wallet to unlock'
-            )}
+            {status === 'unlocking'  && 'Waiting for signature…'}
+            {status === 'decrypting' && 'Decrypting…'}
+            {status === 'idle'       && conditionLabel()}
           </button>
-          {!connected && status === 'idle' && (
-            <p className="text-txt-dim text-[12px] mt-2">Requires Petra wallet</p>
+          {conditionType === CONDITION_PAY && status === 'idle' && (
+            <p className="text-txt-dim text-[12px] mt-2">
+              Petra will prompt you to approve the APT transfer
+            </p>
           )}
         </div>
       )}
