@@ -3,13 +3,23 @@
 /**
  * NavBar — sticky top navigation.
  * Uses usePetra() which wraps @aptos-labs/wallet-adapter-react.
+ *
+ * On public share pages (/f/*) the wallet connect button is hidden —
+ * recipients don't need to connect just to download a file. Sealed files
+ * have their own dedicated connect prompt inline on the page.
  */
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { usePetra, truncateAddress } from '@/lib/petra';
 
 export default function NavBar() {
   const { connected, connecting, address, connect, disconnect } = usePetra();
+  const pathname = usePathname();
+
+  // On public share pages, suppress the wallet-connect prompt so recipients
+  // aren't confused — sealed files show their own connect button inline.
+  const isSharePage = pathname?.startsWith('/f/');
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-[#1a1a1a] bg-[#050505]/85 backdrop-blur-[12px]">
@@ -53,7 +63,7 @@ export default function NavBar() {
                 Disconnect
               </button>
             </div>
-          ) : (
+          ) : !isSharePage ? (
             <button
               onClick={connect}
               disabled={connecting}
@@ -61,7 +71,7 @@ export default function NavBar() {
             >
               {connecting ? 'Connecting…' : 'Connect Petra'}
             </button>
-          )}
+          ) : null}
         </div>
       </div>
     </nav>

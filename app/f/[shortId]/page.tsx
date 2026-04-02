@@ -7,6 +7,7 @@
 import { createServerClient } from '@/lib/supabase';
 import { formatBytes } from '@/lib/utils';
 import PasswordGate from '@/components/PasswordGate';
+import ReportButton from '@/components/ReportButton';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
 
@@ -119,9 +120,13 @@ export default async function SharePage({ params }: SharePageProps) {
         )}
       </div>
 
-      <p className="mt-5 text-center text-txt-dim text-[12px]">
-        Stored on Shelby Protocol &middot; Powered by Forest
-      </p>
+      <div className="mt-5 flex items-center justify-center gap-4">
+        <p className="text-txt-dim text-[12px]">
+          Stored on Shelby Protocol &middot; Powered by Forest
+        </p>
+        <span className="text-[#1a1a1a]">|</span>
+        <ReportButton shortId={shortId} />
+      </div>
     </div>
   );
 }
