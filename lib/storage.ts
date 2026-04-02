@@ -64,14 +64,11 @@ class ShelbyAdapter implements StorageAdapter {
   private async init() {
     if (this.initialised) return;
 
-    // Dynamic imports — these packages may not be installed in dev/mock mode.
-    // webpackIgnore prevents webpack from trying to resolve these at build time.
-    const { Network, Ed25519Account, Ed25519PrivateKey } = await import(
-      /* webpackIgnore: true */ '@aptos-labs/ts-sdk'
-    );
-    const { ShelbyNodeClient } = await import(
-      /* webpackIgnore: true */ '@shelby-protocol/sdk/node'
-    );
+    // Dynamic imports keep these heavy packages out of the client bundle.
+    // serverComponentsExternalPackages in next.config.js ensures they are
+    // resolved from node_modules at runtime on the server / Vercel.
+    const { Network, Ed25519Account, Ed25519PrivateKey } = await import('@aptos-labs/ts-sdk');
+    const { ShelbyNodeClient } = await import('@shelby-protocol/sdk/node');
 
     const network =
       process.env.SHELBY_NETWORK === 'testnet'
