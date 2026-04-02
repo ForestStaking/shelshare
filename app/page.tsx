@@ -67,7 +67,7 @@ export default function HomePage() {
             ].map((item) => (
               <div
                 key={item.step}
-                className="bg-shl-card border border-[#1a1a1a] rounded-[12px] p-7 hover:border-shelgreen/30 hover:-translate-y-[2px] hover:shadow-[0_8px_32px_rgba(139,197,63,0.06)] transition-all duration-200"
+                className="bg-shl-card border border-[#1a1a1a] rounded-[12px] p-7 hover:border-shelgreen/30 hover:shadow-[0_8px_32px_rgba(139,197,63,0.06)] transition-all duration-200"
               >
                 <span className="text-shelgreen font-mono text-[13px] font-semibold">
                   {item.step}

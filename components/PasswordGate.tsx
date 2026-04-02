@@ -53,7 +53,7 @@ export default function PasswordGate({
         </div>
         <a
           href={`/api/download/${shortId}?password=${encodeURIComponent(password)}`}
-          className="inline-block bg-shelgreen text-[#050505] font-semibold text-[14px] px-6 py-[12px] rounded-[8px] hover:bg-shelgreen-dark hover:-translate-y-[1px] transition-all duration-150"
+          className="inline-block bg-shelgreen text-[#050505] font-semibold text-[14px] px-6 py-[12px] rounded-[8px] hover:bg-shelgreen-dark active:scale-[0.97] transition-all duration-150"
         >
           Download {filename} ({sizeFormatted})
         </a>

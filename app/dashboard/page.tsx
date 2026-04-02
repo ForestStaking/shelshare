@@ -98,7 +98,7 @@ export default function DashboardPage() {
         </div>
         <Link
           href="/upload"
-          className="bg-shelgreen text-[#050505] font-semibold text-[14px] px-4 py-[10px] rounded-[6px] hover:bg-shelgreen-dark hover:-translate-y-[1px] transition-all duration-150"
+          className="bg-shelgreen text-[#050505] font-semibold text-[14px] px-4 py-[10px] rounded-[6px] hover:bg-shelgreen-dark transition-all duration-150"
         >
           Upload File
         </Link>

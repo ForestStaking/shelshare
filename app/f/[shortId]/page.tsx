@@ -84,7 +84,7 @@ export default async function SharePage({ params }: SharePageProps) {
               <div className="text-center">
                 <a
                   href={`/api/download/${shortId}`}
-                  className="inline-block bg-shelgreen text-[#050505] font-semibold text-[15px] px-6 py-[14px] rounded-[8px] hover:bg-shelgreen-dark hover:-translate-y-[1px] hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150"
+                  className="inline-block bg-shelgreen text-[#050505] font-semibold text-[15px] px-6 py-[14px] rounded-[8px] hover:bg-shelgreen-dark active:scale-[0.97] transition-all duration-150"
                 >
                   Download ({sizeFormatted})
                 </a>

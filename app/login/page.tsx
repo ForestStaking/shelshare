@@ -46,7 +46,7 @@ export default function LoginPage() {
         <button
           onClick={connect}
           disabled={connecting}
-          className="w-full bg-shelgreen text-[#050505] font-semibold text-[15px] px-6 py-[14px] rounded-[8px] hover:bg-shelgreen-dark hover:-translate-y-[1px] hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150 disabled:opacity-60"
+          className="w-full bg-shelgreen text-[#050505] font-semibold text-[15px] px-6 py-[14px] rounded-[8px] hover:bg-shelgreen-dark hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150 disabled:opacity-60"
         >
           {connecting ? 'Connecting…' : 'Connect Petra'}
         </button>

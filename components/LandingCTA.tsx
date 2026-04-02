@@ -28,7 +28,7 @@ export default function LandingCTA() {
     return (
       <Link
         href="/upload"
-        className="inline-flex items-center gap-2 bg-shelgreen text-[#050505] font-semibold text-[16px] px-8 py-[16px] rounded-[8px] hover:bg-shelgreen-dark hover:-translate-y-[1px] hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150"
+        className="inline-flex items-center gap-2 bg-shelgreen text-[#050505] font-semibold text-[16px] px-8 py-[16px] rounded-[8px] hover:bg-shelgreen-dark hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150"
       >
         Start Sharing
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -43,7 +43,7 @@ export default function LandingCTA() {
       <button
         onClick={connect}
         disabled={connecting}
-        className="inline-flex items-center gap-2 bg-shelgreen text-[#050505] font-semibold text-[16px] px-8 py-[16px] rounded-[8px] hover:bg-shelgreen-dark hover:-translate-y-[1px] hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150 disabled:opacity-60"
+        className="inline-flex items-center gap-2 bg-shelgreen text-[#050505] font-semibold text-[16px] px-8 py-[16px] rounded-[8px] hover:bg-shelgreen-dark hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150 disabled:opacity-60"
       >
         {connecting ? 'Connecting…' : 'Connect Petra to Start'}
         {!connecting && (

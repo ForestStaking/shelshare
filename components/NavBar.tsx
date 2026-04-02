@@ -57,7 +57,7 @@ export default function NavBar() {
             <button
               onClick={connect}
               disabled={connecting}
-              className="bg-shelgreen text-[#050505] font-semibold text-[14px] px-4 py-[10px] rounded-[6px] hover:bg-shelgreen-dark hover:-translate-y-[1px] hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150 disabled:opacity-60"
+              className="bg-shelgreen text-[#050505] font-semibold text-[14px] px-4 py-[10px] rounded-[6px] hover:bg-shelgreen-dark hover:shadow-[0_0_0_4px_rgba(139,197,63,0.3)] transition-all duration-150 disabled:opacity-60"
             >
               {connecting ? 'Connecting…' : 'Connect Petra'}
             </button>
