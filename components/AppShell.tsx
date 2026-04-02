@@ -36,9 +36,17 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
               Forest
             </a>
           </p>
-          <p className="text-txt-dim text-[12px] font-mono">
-            Shelby Protocol Testnet
-          </p>
+          <div className="flex items-center gap-5">
+            <a
+              href="/docs"
+              className="text-txt-dim hover:text-txt-muted text-[12px] transition-all duration-150"
+            >
+              Docs
+            </a>
+            <p className="text-txt-dim text-[12px] font-mono">
+              Shelby Protocol Testnet
+            </p>
+          </div>
         </div>
       </footer>
     </AptosWalletAdapterProvider>

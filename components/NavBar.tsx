@@ -34,6 +34,12 @@ export default function NavBar() {
 
         {/* Nav Links */}
         <div className="flex items-center gap-5">
+          <Link
+            href="/docs"
+            className="text-txt-muted hover:text-txt-primary text-[14px] font-medium transition-all duration-150"
+          >
+            Docs
+          </Link>
           {connected && (
             <>
               <Link
