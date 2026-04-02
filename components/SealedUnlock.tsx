@@ -74,8 +74,18 @@ export default function SealedUnlock({
       else if (conditionType === CONDITION_TIME) payload = buildUnlockTimePayload(shortId);
       else payload = buildUnlockBurnPayload(shortId);
 
-      // Sign & submit — wallet prompts user
-      const txResult = await signAndSubmitTransaction(payload as any);
+      // Sign & submit — wallet prompts user, returns pending tx
+      const pendingTx = await signAndSubmitTransaction(payload as any);
+      const txHash = (pendingTx as any)?.hash ?? (pendingTx as any)?.transactionHash ?? pendingTx;
+
+      // Wait for the committed transaction to get events
+      const committedRes = await fetch(
+        `https://api.shelbynet.shelby.xyz/v1/transactions/by_hash/${txHash}`
+      );
+      if (!committedRes.ok) throw new Error('Could not confirm transaction on-chain.');
+      const txResult = await committedRes.json();
+
+      if (!txResult.success) throw new Error('Transaction failed on-chain.');
 
       // Extract AES key from the SealUnlockedEvent in the tx receipt
       const aesKeyBytes = extractAESKeyFromTx(txResult);
