@@ -271,9 +271,9 @@ export default function HomePage() {
                 Shelby Protocol
               </h3>
               <p className="text-txt-muted text-[14px] leading-relaxed">
-                Decentralised hot storage built on Aptos. Files are replicated across
-                Forest Infra Cavalier nodes — no central authority, no entity that can
-                unilaterally remove content.
+                Decentralised hot storage built on Aptos. Files are stored on
+                Shelby Protocol's network — no central server, no single point of
+                failure, and no middleman controlling access.
               </p>
             </div>
 
