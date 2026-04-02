@@ -189,7 +189,7 @@ export default function SealedUnlock({
       {!isLocked && status !== 'done' && !connected && (
         <div className="text-center">
           <button
-            onClick={() => { setStatus('waiting_wallet'); connect('Petra').finally(() => setStatus('idle')); }}
+            onClick={async () => { setStatus('waiting_wallet'); try { await connect('Petra'); } finally { setStatus('idle'); } }}
             disabled={status === 'waiting_wallet'}
             className="w-full bg-shelgreen text-[#050505] font-semibold text-[15px] px-8 py-[14px] rounded-[8px] hover:bg-shelgreen-dark active:scale-[0.97] transition-all duration-150 disabled:opacity-60"
           >
