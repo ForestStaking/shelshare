@@ -46,6 +46,30 @@ export async function GET(
       );
     }
 
+    // Blocklist check — match on SHA-256 hash or Shelby address
+    // A file can be blocked even if its metadata record still exists
+    // (e.g. after a DMCA takedown without a hard delete).
+    if (file.file_sha256 || file.shelby_address) {
+      const blockQuery = supabase.from('blocklist').select('reason').limit(1);
+
+      if (file.file_sha256 && file.shelby_address) {
+        blockQuery.or(`sha256.eq.${file.file_sha256},shelby_address.eq.${file.shelby_address}`);
+      } else if (file.file_sha256) {
+        blockQuery.eq('sha256', file.file_sha256);
+      } else {
+        blockQuery.eq('shelby_address', file.shelby_address);
+      }
+
+      const { data: blocked } = await blockQuery.maybeSingle();
+      if (blocked) {
+        console.warn(`[download] Blocked file requested: ${shortId} — ${blocked.reason}`);
+        return NextResponse.json(
+          { error: 'This file has been removed and is no longer available.' },
+          { status: 451 } // 451 Unavailable For Legal Reasons
+        );
+      }
+    }
+
     // Check password if protected
     if (file.password_hash) {
       const passwordParam = request.nextUrl.searchParams.get('password');
