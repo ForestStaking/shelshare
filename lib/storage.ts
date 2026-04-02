@@ -197,7 +197,7 @@ let adapterInstance: StorageAdapter | null = null;
 
 export function getStorageAdapter(): StorageAdapter {
   if (!adapterInstance) {
-    const useMock = process.env.SHELBY_MOCK !== 'false';
+    const useMock = process.env.SHELBY_MOCK?.trim() !== 'false';
     adapterInstance = useMock ? new MockAdapter() : new ShelbyAdapter();
     console.log(
       `[ShelShare] Storage adapter: ${useMock ? 'MockAdapter' : 'ShelbyAdapter'}`
