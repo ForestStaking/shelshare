@@ -25,9 +25,8 @@ export default function NavBar() {
     <nav className="sticky top-0 z-50 w-full border-b border-[#1a1a1a] bg-[#050505]/85 backdrop-blur-[12px]">
       <div className="mx-auto max-w-[1100px] flex items-center justify-between px-8 py-4">
         {/* Wordmark */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <span className="text-shelgreen font-semibold text-[15px]">S/</span>
-          <span className="text-txt-primary font-semibold text-[15px] group-hover:text-shelgreen transition-all duration-150">
+        <Link href="/" className="group">
+          <span className="text-txt-primary font-bold text-[20px] group-hover:text-shelgreen transition-all duration-150">
             ShelShare
           </span>
         </Link>
