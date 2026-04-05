@@ -11,7 +11,7 @@ import { useWallet } from '@aptos-labs/wallet-adapter-react';
 import {
   CONDITION_PAY, CONDITION_TIME, CONDITION_BURN,
   buildUnlockPayPayload, buildUnlockTimePayload, buildUnlockBurnPayload,
-  extractAESKeyFromTx, fetchSealInfo, ocatasToApt,
+  extractAESKeyFromTx, fetchSealInfo, ocatasToApt, getAptosApiBase,
   type SealInfo,
 } from '@/lib/sealed';
 import { importKeyBytes, decryptFile, triggerDownload } from '@/lib/crypto';
@@ -80,7 +80,7 @@ export default function SealedUnlock({
 
       // Wait for the committed transaction to get events
       const committedRes = await fetch(
-        `https://api.shelbynet.shelby.xyz/v1/transactions/by_hash/${txHash}`
+        `${getAptosApiBase()}/transactions/by_hash/${txHash}`
       );
       if (!committedRes.ok) throw new Error('Could not confirm transaction on-chain.');
       const txResult = await committedRes.json();

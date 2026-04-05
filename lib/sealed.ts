@@ -1,14 +1,23 @@
 /**
- * Sealed — contract interaction layer for the shelbynet Move module.
- *
- * Module: 0xad132d7bd18c6370f756e0edc3408696f007fe43b987f027e6f9bc866ab3a283::sealed_files
+ * Sealed — contract interaction layer for the Move module.
+ * Supports shelbynet and Aptos testnet via NEXT_PUBLIC_SHELBY_NETWORK.
  *
  * Used client-side only — all calls go through the Petra wallet adapter
  * (signAndSubmitTransaction) so the user signs every state change.
  */
 
+// Contract address — update after redeploying on a new network
 export const SEALED_CONTRACT =
+  process.env.NEXT_PUBLIC_SEALED_CONTRACT ??
   '0xad132d7bd18c6370f756e0edc3408696f007fe43b987f027e6f9bc866ab3a283';
+
+/** Aptos Full Node base URL for the active network. */
+export function getAptosApiBase(): string {
+  const network = process.env.NEXT_PUBLIC_SHELBY_NETWORK ?? 'shelbynet';
+  return network === 'testnet'
+    ? 'https://api.testnet.aptoslabs.com/v1'
+    : 'https://api.shelbynet.shelby.xyz/v1';
+}
 
 export const CONDITION_PAY  = 1;
 export const CONDITION_TIME = 2;
@@ -119,7 +128,7 @@ export interface SealInfo {
 export async function fetchSealInfo(shortId: string): Promise<SealInfo | null> {
   try {
     const res = await fetch(
-      `https://api.shelbynet.shelby.xyz/v1/view`,
+      `${getAptosApiBase()}/view`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
