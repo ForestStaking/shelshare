@@ -59,7 +59,7 @@ function Callout({ type = 'info', children }: { type?: 'info' | 'warn' | 'tip'; 
     warn: 'bg-amber-500/5 border-amber-500/20 text-amber-300',
     tip:  'bg-shelgreen/5 border-shelgreen/20 text-shelgreen',
   };
-  const icons = { info: 'ℹ', warn: '⚠', tip: '✦' };
+  const icons = { info: 'i', warn: '!', tip: '→' };
   return (
     <div className={`border rounded-[8px] px-4 py-3 mb-4 flex gap-3 items-start ${styles[type]}`}>
       <span className="text-[14px] mt-[1px] shrink-0">{icons[type]}</span>
@@ -158,12 +158,11 @@ export default function DocsPage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-6">
               {[
-                { icon: '⛓', title: 'Decentralised Storage', desc: 'File bytes live on Shelby Protocol nodes, not a cloud bucket.' },
-                { icon: '🔒', title: 'Sealed Files', desc: 'Encrypt files with on-chain access conditions — pay, time-lock, or burn.' },
-                { icon: '🛡', title: 'Built-in Safety', desc: 'Extension blocklist, magic bytes detection, and SHA-256 hash blocklist.' },
-              ].map(({ icon, title, desc }) => (
+                { icon: null, title: 'Decentralised Storage', desc: 'File bytes live on Shelby Protocol nodes, not a cloud bucket.' },
+                { icon: null, title: 'Sealed Files', desc: 'Encrypt files with on-chain access conditions — pay, time-lock, or burn.' },
+                { icon: null, title: 'Built-in Safety', desc: 'Extension blocklist, magic bytes detection, and SHA-256 hash blocklist.' },
+              ].map(({ title, desc }) => (
                 <div key={title} className="bg-shl-surface border border-[#1a1a1a] rounded-[10px] p-4">
-                  <div className="text-[24px] mb-2">{icon}</div>
                   <p className="text-txt-primary font-semibold text-[14px] mb-1">{title}</p>
                   <p className="text-txt-dim text-[13px] leading-relaxed">{desc}</p>
                 </div>

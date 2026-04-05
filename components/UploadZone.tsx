@@ -139,7 +139,7 @@ export default function UploadZone() {
             sealConfig
           ) as any
         );
-        setProgressLabel('Sealed ✓');
+        setProgressLabel('Sealed');
       }
 
       setProgress(100);
@@ -328,7 +328,7 @@ export default function UploadZone() {
         {uploading
           ? progressLabel || 'Uploading…'
           : seal.enabled
-            ? '🔒 Seal & Upload'
+            ? 'Seal & Upload'
             : 'Upload & Get Link'
         }
       </button>

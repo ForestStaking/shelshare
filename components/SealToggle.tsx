@@ -53,9 +53,9 @@ export default function SealToggle({ value, onChange, disabled }: Props) {
           {/* Condition type */}
           <div className="grid grid-cols-3 gap-2">
             {[
-              { type: CONDITION_PAY,  label: '💸 Pay to unlock',  desc: 'Buyer pays APT' },
-              { type: CONDITION_TIME, label: '⏱ Time lock',       desc: 'Unlocks on date' },
-              { type: CONDITION_BURN, label: '🔥 Burn',           desc: 'One-time claim' },
+              { type: CONDITION_PAY,  label: 'Pay to unlock',  desc: 'Buyer pays APT' },
+              { type: CONDITION_TIME, label: 'Time lock',       desc: 'Unlocks on date' },
+              { type: CONDITION_BURN, label: 'Burn',           desc: 'One-time claim' },
             ].map(({ type, label, desc }) => (
               <button
                 key={type}

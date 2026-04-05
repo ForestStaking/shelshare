@@ -127,13 +127,13 @@ export default function SealedUnlock({
   };
 
   const badge = () => {
-    if (conditionType === CONDITION_PAY)  return { icon: '💸', label: 'Pay to unlock', color: 'text-amber-400' };
-    if (conditionType === CONDITION_TIME) return { icon: '⏱', label: 'Time locked', color: 'text-blue-400' };
-    if (conditionType === CONDITION_BURN) return { icon: '🔥', label: 'Burn — one-time', color: 'text-orange-400' };
-    return { icon: '🔒', label: 'Sealed', color: 'text-txt-muted' };
+    if (conditionType === CONDITION_PAY)  return { label: 'Pay to unlock', color: 'text-amber-400' };
+    if (conditionType === CONDITION_TIME) return { label: 'Time locked', color: 'text-blue-400' };
+    if (conditionType === CONDITION_BURN) return { label: 'Burn — one-time', color: 'text-orange-400' };
+    return { label: 'Sealed', color: 'text-txt-muted' };
   };
 
-  const { icon, label, color } = badge();
+  const { label, color } = badge();
   const isLocked = isTimeLocked || (conditionType === CONDITION_BURN && claimed);
   const buttonDisabled = status === 'unlocking' || status === 'decrypting' || isLocked || status === 'done';
 
@@ -141,7 +141,6 @@ export default function SealedUnlock({
     <div>
       {/* Sealed badge */}
       <div className={`flex items-center justify-center gap-2 mb-6 ${color}`}>
-        <span className="text-[18px]">{icon}</span>
         <span className="text-[13px] font-semibold uppercase tracking-[0.4px]">{label}</span>
       </div>
 
@@ -176,7 +175,7 @@ export default function SealedUnlock({
       {/* Status */}
       {status === 'done' && (
         <div className="text-center mb-4">
-          <p className="text-shelgreen font-semibold text-[14px]">✓ Decrypted — your download started</p>
+          <p className="text-shelgreen font-semibold text-[14px]">Decrypted — your download started</p>
         </div>
       )}
       {status === 'error' && (

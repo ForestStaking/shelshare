@@ -123,30 +123,29 @@ export default function HomePage() {
             <div className="flex-1 grid grid-cols-1 gap-3 w-full max-w-[380px]">
               {[
                 {
-                  icon: '💸',
+                  icon: null,
                   label: 'Pay to Unlock',
                   color: 'border-amber-500/20 bg-amber-500/5',
                   badge: 'text-amber-400',
                   desc: 'Set an APT price. The smart contract transfers payment to you atomically with the key release — no trust required.',
                 },
                 {
-                  icon: '⏱',
+                  icon: null,
                   label: 'Time Lock',
                   color: 'border-blue-500/20 bg-blue-500/5',
                   badge: 'text-blue-400',
                   desc: 'Schedule a future date. The file is unreadable until the block timestamp passes — enforced on-chain, not by ShelShare.',
                 },
                 {
-                  icon: '🔥',
+                  icon: null,
                   label: 'Burn — One-Time',
                   color: 'border-orange-500/20 bg-orange-500/5',
                   badge: 'text-orange-400',
                   desc: 'First person to claim gets the key. After that it\'s gone forever. Perfect for exclusive drops and one-time secrets.',
                 },
-              ].map(({ icon, label, color, badge, desc }) => (
+              ].map(({ label, color, badge, desc }) => (
                 <div key={label} className={`border rounded-[10px] p-4 ${color}`}>
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[16px]">{icon}</span>
                     <span className={`font-semibold text-[14px] ${badge}`}>{label}</span>
                   </div>
                   <p className="text-txt-dim text-[13px] leading-relaxed">{desc}</p>
@@ -215,41 +214,34 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
             {[
               {
-                icon: '⛓',
                 title: 'Decentralised Storage',
                 desc: 'Files live on Shelby Protocol nodes — no AWS, no GCP, no single point of failure or takedown.',
               },
               {
-                icon: '🔒',
                 title: 'Client-Side Encryption',
                 desc: 'AES-256-GCM in the browser. Plaintext never leaves your device. Sealed files are unreadable server-side.',
               },
               {
-                icon: '🧾',
                 title: 'On-Chain Access Control',
                 desc: 'Move smart contract on Shelby Protocol manages keys. Conditions are verifiable and tamper-proof.',
               },
               {
-                icon: '🔑',
                 title: 'Password Protection',
                 desc: 'Protect any link with a password. Stored as a bcrypt hash — ShelShare never sees the plaintext.',
               },
               {
-                icon: '⏳',
                 title: 'Link Expiry',
                 desc: 'Set links to expire after 1, 7, 30, or 90 days. Expired links return 410 Gone automatically.',
               },
               {
-                icon: '🛡',
                 title: 'Built-in Safety',
                 desc: 'Extension blocklist, magic-bytes detection, SHA-256 hash blocklist, and per-wallet rate limiting on every upload.',
               },
-            ].map(({ icon, title, desc }) => (
+            ].map(({ title, desc }) => (
               <div
                 key={title}
                 className="bg-shl-card border border-[#1a1a1a] rounded-[12px] p-6 hover:border-[#2a2a2a] transition-all duration-150"
               >
-                <div className="text-[26px] mb-3">{icon}</div>
                 <h3 className="text-txt-primary font-semibold text-[15px] mb-2">{title}</h3>
                 <p className="text-txt-dim text-[13px] leading-relaxed">{desc}</p>
               </div>

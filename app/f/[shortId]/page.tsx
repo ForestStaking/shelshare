@@ -66,7 +66,7 @@ export default async function SharePage({ params }: SharePageProps) {
             {/* File Info */}
             <div className="mb-8 text-center">
               <span className="inline-block bg-shl-surface border border-[#1a1a1a] text-txt-dim text-[11px] font-semibold uppercase tracking-[0.5px] px-3 py-[4px] rounded-full mb-4">
-                {isSealed ? '🔒 Sealed via ShelShare' : 'Shared via ShelShare'}
+                {isSealed ? 'Sealed via ShelShare' : 'Shared via ShelShare'}
               </span>
               <h1 className="text-txt-primary font-semibold text-[18px] mb-1 break-all">
                 {file.original_filename}

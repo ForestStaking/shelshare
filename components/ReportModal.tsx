@@ -60,7 +60,7 @@ export default function ReportModal({ shortId, onClose }: Props) {
         {status === 'done' ? (
           /* Success state */
           <div className="text-center py-4">
-            <div className="text-[32px] mb-3">✓</div>
+            <div className="text-[32px] mb-3 text-shelgreen font-bold">Done</div>
             <h2 className="text-txt-primary font-semibold text-[17px] mb-2">Report submitted</h2>
             <p className="text-txt-muted text-[14px] mb-6">
               Our team will review it shortly. Thank you for keeping ShelShare safe.
